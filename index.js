@@ -1,10 +1,14 @@
 const express = require('express');
-const cors = require('cors'); // ⬅️ 1. Importar CORS
 require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const cors = require('cors');
 
 const app = express();
-app.use(cors()); // ⬅️ 2. Habilitar CORS
+
+// Permitir CORS desde cualquier origen (solo para pruebas, en producción deberías restringirlo)
+app.use(cors());
+
+// Permite recibir JSON en las peticiones
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -36,6 +40,8 @@ app.post('/release-payment', async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log('Servidor corriendo en el puerto 3000');
+// Escucha en Railway con su propio puerto o en local en 3000
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
