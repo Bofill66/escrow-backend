@@ -1,8 +1,10 @@
 const express = require('express');
+const cors = require('cors'); // ⬅️ 1. Importar CORS
 require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
+app.use(cors()); // ⬅️ 2. Habilitar CORS
 app.use(express.json());
 
 app.get('/', (req, res) => {
